@@ -17,7 +17,7 @@ export default class SortingVisualizer extends React.Component {
   resetArray() {
     const array = [];
     for (let i = 0; i < 320; i++) {
-      array.push(randomIntFromInterval(5, 820));
+      array.push(generateRandomInt(5, 820));
     }
     this.setState({array});
   }
@@ -28,7 +28,9 @@ export default class SortingVisualizer extends React.Component {
 
   heapSort() {}
 
-  mergeSort() {}
+  mergeSort() {
+
+  }
 
   render() {
     const {array} = this.state;
@@ -52,7 +54,15 @@ export default class SortingVisualizer extends React.Component {
 }
 
 // https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
-function randomIntFromInterval(min, max) {
+function generateRandomInt(min, max) {
   // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function testArrayEquality(arrayOne, arrayTwo) {
+  if (arrayOne.length !== arrayTwo) return false;
+  for (let i = 0; i < arrayOne.length; i++) {
+    if (arrayOne[i] !== arrayTwo[i]) return false;
+  }
+  return true;
 }
