@@ -29,7 +29,12 @@ export default class SortingVisualizer extends React.Component {
   heapSort() {}
 
   mergeSort() {
+    const jsSortedArray = this.state.array
+      .slice()
+      .sort((a, b) => a - b);
+    const sortedArray = algorithms.mergeSort(this.state.array);
 
+    console.log(testArrayEquality(jsSortedArray, sortedArray));
   }
 
   render() {
@@ -60,7 +65,7 @@ function generateRandomInt(min, max) {
 }
 
 function testArrayEquality(arrayOne, arrayTwo) {
-  if (arrayOne.length !== arrayTwo) return false;
+  if (arrayOne.length !== arrayTwo.length) return false;
   for (let i = 0; i < arrayOne.length; i++) {
     if (arrayOne[i] !== arrayTwo[i]) return false;
   }
