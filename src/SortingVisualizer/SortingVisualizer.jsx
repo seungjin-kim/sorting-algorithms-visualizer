@@ -10,5 +10,25 @@ export default class SortingVisualizer extends React.Component {
     };
   }
 
-  
+  componentDidMount() {
+    this.resetArray();
+  }
+
+  resetArray() {
+    const array = [];
+    for (let i = 0; i < 100; i++) {
+      array.push(randomIntFromInterval(5, 1000));
+    }
+    this.setState({array});
+  }
+
+  render() {
+    const {array} = this.state;
+
+    return (
+      
+    );
+  }
+
+
 }
