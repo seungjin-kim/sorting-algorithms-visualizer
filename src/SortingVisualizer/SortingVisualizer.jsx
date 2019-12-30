@@ -1,8 +1,9 @@
 import React from 'react';
 import './SortingVisualizer.css';
-import {getMergeSortAnimations} from '../Algorithms/algorithms.js'
+import {getMergeSortAnimations} from '../Algorithms/mergeSort.js'
+import {getBubbleSortAnimations} from '../Algorithms/bubbleSort.js'
 
-const MS_ANIMATION_SPEED = 1;
+const MS_ANIMATION_SPEED = 3;
 const NUM_OF_ARRAY_BARS = 310
 const PRIMARY_COLOR = 'pink';
 const SEC_COLOR = 'teal';
@@ -29,7 +30,31 @@ export default class SortingVisualizer extends React.Component {
     this.setState({array});
   }
 
-  bubbleSort() {}
+  bubbleSort() {
+    const animations = getBubbleSortAnimations(this.state.array);
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName('array-bar');
+      if (animations[i].length === 2) {
+        const [barOneIdx, barTwoIdx] = animations[i];
+        const barOneStyle = arrayBars[barOneIdx].style;
+        const barTwoStyle = arrayBars[barTwoIdx].style;
+        setTimeout(() => {
+          barOneStyle.backgroundColor = SEC_COLOR;
+          barTwoStyle.backgroundColor = SEC_COLOR;
+        }, i * MS_ANIMATION_SPEED);
+      }
+
+      else if (animations[i].length === 3) {
+        const [barOneIdx, barTwoIdx] = animations[i];
+        const barOneStyle = arrayBars[barOneIdx].style;
+        const barTwoStyle = arrayBars[barTwoIdx].style;
+        setTimeout(() => {
+          barOneStyle.backgroundColor = PRIMARY_COLOR;
+          barTwoStyle.backgroundColor = PRIMARY_COLOR;
+        }, i * MS_ANIMATION_SPEED);
+      }
+    }
+  }
 
   quickSort() {}
 
