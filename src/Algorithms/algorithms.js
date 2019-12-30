@@ -9,8 +9,8 @@ export function getMergeSortAnimations(array) {
 function msHelper(mainArray, auxArray, startIdx, endIdx, animations) {
   if (startIdx === endIdx) return;
   const midIdx = Math.floor((startIdx + endIdx) / 2);
-  msHelper(auxArray, startIdx, midIdx, mainArray, animations);
-  msHelper(auxArray, midIdx + 1, endIdx, mainArray, animations);
+  msHelper(auxArray, mainArray, startIdx, midIdx, animations);
+  msHelper(auxArray, mainArray, midIdx + 1, endIdx, animations);
   mergeArrays(mainArray, auxArray, startIdx, midIdx, endIdx, animations);
 }
 

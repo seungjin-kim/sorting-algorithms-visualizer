@@ -1,5 +1,12 @@
 import React from 'react';
 import './SortingVisualizer.css';
+import {getMergeSortAnimations} from '../Algorithms/algorithms.js'
+
+const MS_ANIMATION_SPEED = 1;
+const NUM_OF_ARRAY_BARS = 310
+const PRIMARY_COLOR = 'pink';
+const SEC_COLOR = 'teal';
+
 
 export default class SortingVisualizer extends React.Component {
   constructor(props) {
@@ -16,7 +23,7 @@ export default class SortingVisualizer extends React.Component {
 
   resetArray() {
     const array = [];
-    for (let i = 0; i < 320; i++) {
+    for (let i = 0; i < NUM_OF_ARRAY_BARS; i++) {
       array.push(generateRandomInt(5, 820));
     }
     this.setState({array});
@@ -29,12 +36,27 @@ export default class SortingVisualizer extends React.Component {
   heapSort() {}
 
   mergeSort() {
-    const jsSortedArray = this.state.array
-      .slice()
-      .sort((a, b) => a - b);
-    const sortedArray = algorithms.mergeSort(this.state.array);
-
-    console.log(testArrayEquality(jsSortedArray, sortedArray));
+    const animations = getMergeSortAnimations(this.state.array);
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName('array-bar');
+      const isChangeColor = i % 3 !== 2;
+      if (isChangeColor) {
+        const [barOneIdx, barTwoIdx] = animations[i];
+        const barOneStyle = arrayBars[barOneIdx].style;
+        const barTwoStyle = arrayBars[barTwoIdx].style;
+        const color = i % 3 === 0 ? SEC_COLOR : PRIMARY_COLOR;
+        setTimeout(() => {
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
+        }, i * MS_ANIMATION_SPEED);
+      } else {
+        setTimeout(() => {
+          const [barOneIdx, newHeight] = animations[i];
+          const barOneStyle = arrayBars[barOneIdx].style;
+          barOneStyle.height = `${newHeight}px`;
+        }, i * MS_ANIMATION_SPEED)
+      }
+    }
   }
 
   render() {
@@ -46,7 +68,10 @@ export default class SortingVisualizer extends React.Component {
           <div 
             className="array-bar"
             key={idx}
-            style={{height: `${value}px`}}></div>
+            style={{
+              backgroundColor: PRIMARY_COLOR,
+              height: `${value}px`,
+            }}></div>
         ))}
         <button onClick={() => this.resetArray()}>Reset Array</button>
         <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
