@@ -15,7 +15,7 @@ export function getBubbleSortAnimations(array) {
     }
     counter++;
   }
-  return animations
+  return animations;
 }
 
 function swap(i, j, array) {

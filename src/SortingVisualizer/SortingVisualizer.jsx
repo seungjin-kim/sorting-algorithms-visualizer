@@ -3,8 +3,8 @@ import './SortingVisualizer.css';
 import {getMergeSortAnimations} from '../Algorithms/mergeSort.js'
 import {getBubbleSortAnimations} from '../Algorithms/bubbleSort.js'
 
-const MS_ANIMATION_SPEED = 3;
-const NUM_OF_ARRAY_BARS = 310
+const MS_ANIMATION_SPEED = 1;
+const NUM_OF_ARRAY_BARS = 150
 const PRIMARY_COLOR = 'pink';
 const SEC_COLOR = 'teal';
 
@@ -52,6 +52,16 @@ export default class SortingVisualizer extends React.Component {
           barOneStyle.backgroundColor = PRIMARY_COLOR;
           barTwoStyle.backgroundColor = PRIMARY_COLOR;
         }, i * MS_ANIMATION_SPEED);
+      }
+
+      else {
+        setTimeout(() => {
+          const [barOneIdx, heightOne, barTwoIdx, heightTwo] = animations[i];
+          const barOneStyle = arrayBars[barOneIdx].style;
+          const barTwoStyle = arrayBars[barTwoIdx].style;
+          barOneStyle.height = `${heightTwo}px`;
+          barTwoStyle.height = `${heightOne}px`;
+        }, i * MS_ANIMATION_SPEED)
       }
     }
   }
