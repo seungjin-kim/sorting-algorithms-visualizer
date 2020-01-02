@@ -3,13 +3,13 @@ import './SortingVisualizer.css';
 import {getMergeSortAnimations} from '../Algorithms/mergeSort.js'
 import {getBubbleSortAnimations} from '../Algorithms/bubbleSort.js'
 import {getQuickSortAnimations} from '../Algorithms/quickSort.js'
+import {getHeapSortAnimations} from '../Algorithms/heapSort.js'
 
 const MS_ANIMATION_SPEED = 1;
 const NUM_OF_ARRAY_BARS = 140
 const PRIMARY_COLOR = 'pink';
 const SEC_COLOR = 'teal';
 const TER_COLOR = 'maroon';
-
 
 export default class SortingVisualizer extends React.Component {
   constructor(props) {
