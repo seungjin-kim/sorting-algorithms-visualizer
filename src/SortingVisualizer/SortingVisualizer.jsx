@@ -145,7 +145,62 @@ export default class SortingVisualizer extends React.Component {
     }
   }
 
-  heapSort() {}
+  heapSort() {
+    const animations = getHeapSortAnimations(this.state.array);
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName('array-bar');
+      if (animations[i].length === 3) {
+        if (animations[i][2] === "color") {
+          const [barOneIdx, barTwoIdx] = animations[i];
+          const barOneStyle = arrayBars[barOneIdx].style;
+          const barTwoStyle = arrayBars[barTwoIdx].style;
+          setTimeout(() => {
+            barOneStyle.backgroundColor = SEC_COLOR;
+            barTwoStyle.backgroundColor = SEC_COLOR;
+          }, i * MS_ANIMATION_SPEED);
+        }
+        else {
+          const [barOneIdx, barTwoIdx] = animations[i];
+          const barOneStyle = arrayBars[barOneIdx].style;
+          const barTwoStyle = arrayBars[barTwoIdx].style;
+          setTimeout(() => {
+            barOneStyle.backgroundColor = PRIMARY_COLOR;
+            barTwoStyle.backgroundColor = PRIMARY_COLOR;
+          }, i * MS_ANIMATION_SPEED);
+        }
+      }
+      else if (animations[i].length === 5) {
+        if (animations[i][4] === "color") {
+          const [barOneIdx, barTwoIdx] = animations[i];
+          const barOneStyle = arrayBars[barOneIdx].style;
+          const barTwoStyle = arrayBars[barTwoIdx].style;
+          setTimeout(() => {
+            barOneStyle.backgroundColor = TER_COLOR;
+            barTwoStyle.backgroundColor = TER_COLOR;
+          }, i * MS_ANIMATION_SPEED);
+        }
+        else {
+          const [barOneIdx, barTwoIdx] = animations[i];
+          const barOneStyle = arrayBars[barOneIdx].style;
+          const barTwoStyle = arrayBars[barTwoIdx].style;
+          setTimeout(() => {
+            barOneStyle.backgroundColor = PRIMARY_COLOR;
+            barTwoStyle.backgroundColor = PRIMARY_COLOR;
+          }, i * MS_ANIMATION_SPEED);
+        }
+      }
+      else {
+        setTimeout(() => {
+          const [barOneIdx, newHeightOne, barTwoIdx, newHeightTwo] = animations[i];
+          const barOneStyle = arrayBars[barOneIdx].style;
+          const barTwoStyle = arrayBars[barTwoIdx].style;
+          barOneStyle.height = `${newHeightTwo}px`;
+          barTwoStyle.height = `${newHeightOne}px`;
+        }, i * MS_ANIMATION_SPEED);
+      }
+    }
+
+  }
 
   mergeSort() {
     const animations = getMergeSortAnimations(this.state.array);
