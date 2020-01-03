@@ -18,6 +18,8 @@ import {
 const Topbar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const {toggleButtonStatus, mergeSort} = props;
+
 
   return (
     <div>
@@ -37,7 +39,15 @@ const Topbar = (props) => {
               <NavLink href="#" onClick={props.heapSort}>Heap Sort</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="#" onClick={props.mergeSort}>Merge Sort</NavLink>
+              <NavLink 
+                disabled={props.isDisabled} 
+                href="#" 
+                onClick={() => {
+                  // props.mergeSort()
+                  // props.toggleButtonStatus(props.mergeSort)
+                  toggleButtonStatus(mergeSort);
+                }}>
+              Merge Sort</NavLink>
             </NavItem>
 
             <Button outline color="info" id="PopoverLegacy" type="button">
@@ -50,7 +60,7 @@ const Topbar = (props) => {
                 Quick sort time complexity is O(n^2) in worst case and O(nlog(n)) in average and best. Space complexity is O(log(n)). 
                 Heap Sort time coplexity is O(nlog(n)). Space complexity is O(1).
                 Merge Sort time complexity is O(nlog(n)). Space complexity is O(n). 
-                *Note that complexity depends on implementation details. Refer to code in github to see how I achieved above complexity for this visualization.
+                *Note that complexity depends on implementation details. Refer to code in github to see how the above complexity was achieved for this visualization.
               </PopoverBody>
             </UncontrolledPopover>
           </Nav>

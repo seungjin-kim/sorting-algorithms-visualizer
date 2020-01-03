@@ -23,19 +23,22 @@ export default class SortingVisualizer extends React.Component {
 
     this.state = {
       array: [],
-      disabled: false,
+      isDisabled: false,
     };
+  }
+
+  toggleButtonStatus(callback) {
+    
+    this.setState({
+      isDisabled: true
+    });
+    
+    setTimeout(() => callback(), 500);
+    
   }
 
   componentDidMount() {
     this.resetArray();
-  }
-
-  toggle() {
-    let {disabled} = this.state;
-    this.setState({
-      disabled: !disabled
-    })
   }
 
   resetArray() {
@@ -47,11 +50,70 @@ export default class SortingVisualizer extends React.Component {
   }
 
   bubbleSort() {
-    if (this.state.disabled === false) {
-      const animations = getBubbleSortAnimations(this.state.array);
-      for (let i = 0; i < animations.length; i++) {
-        const arrayBars = document.getElementsByClassName('array-bar');
-        if (animations[i].length === 2) {
+    const animations = getBubbleSortAnimations(this.state.array);
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName('array-bar');
+      if (animations[i].length === 2) {
+        const [barOneIdx, barTwoIdx] = animations[i];
+        const barOneStyle = arrayBars[barOneIdx].style;
+        const barTwoStyle = arrayBars[barTwoIdx].style;
+        setTimeout(() => {
+          barOneStyle.backgroundColor = SEC_COLOR;
+          barTwoStyle.backgroundColor = SEC_COLOR;
+        }, i * MS_ANIMATION_SPEED);
+      }
+
+      else if (animations[i].length === 3) {
+        const [barOneIdx, barTwoIdx] = animations[i];
+        const barOneStyle = arrayBars[barOneIdx].style;
+        const barTwoStyle = arrayBars[barTwoIdx].style;
+        setTimeout(() => {
+          barOneStyle.backgroundColor = PRIMARY_COLOR;
+          barTwoStyle.backgroundColor = PRIMARY_COLOR;
+        }, i * MS_ANIMATION_SPEED);
+      }
+
+      else {
+        setTimeout(() => {
+          const [barOneIdx, heightOne, barTwoIdx, heightTwo] = animations[i];
+          const barOneStyle = arrayBars[barOneIdx].style;
+          const barTwoStyle = arrayBars[barTwoIdx].style;
+          barOneStyle.height = `${heightTwo}px`;
+          barTwoStyle.height = `${heightOne}px`;
+        }, i * MS_ANIMATION_SPEED)
+      }
+    }
+
+    setTimeout(() => this.setState({
+      isDisabled: false
+    }), animations.length * MS_ANIMATION_SPEED);
+  }
+
+  quickSort() {
+    const animations = getQuickSortAnimations(this.state.array);
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName('array-bar');
+      if (animations[i].length === 2) {
+        // Color single pivot index
+        if (animations[i][1] === "color") {
+          const [barOneIdx] = animations[i];
+          const barOneStyle = arrayBars[barOneIdx].style;
+          setTimeout(() => {
+            barOneStyle.backgroundColor = TER_COLOR;
+          }, i * MS_ANIMATION_SPEED);
+        }
+        // Revert color single pivot index
+        else {
+          const [barOneIdx] = animations[i];
+          const barOneStyle = arrayBars[barOneIdx].style;
+          setTimeout(() => {
+            barOneStyle.backgroundColor = PRIMARY_COLOR;
+          }, i * MS_ANIMATION_SPEED);
+        }
+      }
+      else if (animations[i].length === 3) {
+        // color left and right
+        if (animations[i][2] === "color") {
           const [barOneIdx, barTwoIdx] = animations[i];
           const barOneStyle = arrayBars[barOneIdx].style;
           const barTwoStyle = arrayBars[barTwoIdx].style;
@@ -60,8 +122,8 @@ export default class SortingVisualizer extends React.Component {
             barTwoStyle.backgroundColor = SEC_COLOR;
           }, i * MS_ANIMATION_SPEED);
         }
-  
-        else if (animations[i].length === 3) {
+        // revert color left and right
+        else {
           const [barOneIdx, barTwoIdx] = animations[i];
           const barOneStyle = arrayBars[barOneIdx].style;
           const barTwoStyle = arrayBars[barTwoIdx].style;
@@ -70,106 +132,42 @@ export default class SortingVisualizer extends React.Component {
             barTwoStyle.backgroundColor = PRIMARY_COLOR;
           }, i * MS_ANIMATION_SPEED);
         }
-  
-        else {
-          setTimeout(() => {
-            const [barOneIdx, heightOne, barTwoIdx, heightTwo] = animations[i];
-            const barOneStyle = arrayBars[barOneIdx].style;
-            const barTwoStyle = arrayBars[barTwoIdx].style;
-            barOneStyle.height = `${heightTwo}px`;
-            barTwoStyle.height = `${heightOne}px`;
-          }, i * MS_ANIMATION_SPEED)
-        }
       }
-
-      this.toggle()
-      setTimeout(() => {
-        this.toggle()
-      }, animations.length * MS_ANIMATION_SPEED + 1)
-    }
-  }
-
-  quickSort() {
-    if (this.state.disabled === false) {
-      const animations = getQuickSortAnimations(this.state.array);
-      for (let i = 0; i < animations.length; i++) {
-        const arrayBars = document.getElementsByClassName('array-bar');
-        if (animations[i].length === 2) {
-          // Color single pivot index
-          if (animations[i][1] === "color") {
-            const [barOneIdx] = animations[i];
-            const barOneStyle = arrayBars[barOneIdx].style;
-            setTimeout(() => {
-              barOneStyle.backgroundColor = TER_COLOR;
-            }, i * MS_ANIMATION_SPEED);
-          }
-          // Revert color single pivot index
-          else {
-            const [barOneIdx] = animations[i];
-            const barOneStyle = arrayBars[barOneIdx].style;
-            setTimeout(() => {
-              barOneStyle.backgroundColor = PRIMARY_COLOR;
-            }, i * MS_ANIMATION_SPEED);
-          }
-        }
-        else if (animations[i].length === 3) {
-          // color left and right
-          if (animations[i][2] === "color") {
-            const [barOneIdx, barTwoIdx] = animations[i];
-            const barOneStyle = arrayBars[barOneIdx].style;
-            const barTwoStyle = arrayBars[barTwoIdx].style;
-            setTimeout(() => {
-              barOneStyle.backgroundColor = SEC_COLOR;
-              barTwoStyle.backgroundColor = SEC_COLOR;
-            }, i * MS_ANIMATION_SPEED);
-          }
-          // revert color left and right
-          else {
-            const [barOneIdx, barTwoIdx] = animations[i];
-            const barOneStyle = arrayBars[barOneIdx].style;
-            const barTwoStyle = arrayBars[barTwoIdx].style;
-            setTimeout(() => {
-              barOneStyle.backgroundColor = PRIMARY_COLOR;
-              barTwoStyle.backgroundColor = PRIMARY_COLOR;
-            }, i * MS_ANIMATION_SPEED);
-          }
-        }
-        else if (animations[i].length === 5) {
-          // color left/right and pivot
-          if (animations[i][4] === "color") {
-            const [barOneIdx, barTwoIdx] = animations[i];
-            const barOneStyle = arrayBars[barOneIdx].style;
-            const barTwoStyle = arrayBars[barTwoIdx].style;
-            setTimeout(() => {
-              barOneStyle.backgroundColor = SEC_COLOR;
-              barTwoStyle.backgroundColor = SEC_COLOR;
-            }, i * MS_ANIMATION_SPEED);
-          }
-          else {
-            const [barOneIdx, barTwoIdx] = animations[i];
-            const barOneStyle = arrayBars[barOneIdx].style;
-            const barTwoStyle = arrayBars[barTwoIdx].style;
-            setTimeout(() => {
-              barOneStyle.backgroundColor = PRIMARY_COLOR;
-              barTwoStyle.backgroundColor = PRIMARY_COLOR;
-            }, i * MS_ANIMATION_SPEED);
-          }
+      else if (animations[i].length === 5) {
+        // color left/right and pivot
+        if (animations[i][4] === "color") {
+          const [barOneIdx, barTwoIdx] = animations[i];
+          const barOneStyle = arrayBars[barOneIdx].style;
+          const barTwoStyle = arrayBars[barTwoIdx].style;
+          setTimeout(() => {
+            barOneStyle.backgroundColor = SEC_COLOR;
+            barTwoStyle.backgroundColor = SEC_COLOR;
+          }, i * MS_ANIMATION_SPEED);
         }
         else {
+          const [barOneIdx, barTwoIdx] = animations[i];
+          const barOneStyle = arrayBars[barOneIdx].style;
+          const barTwoStyle = arrayBars[barTwoIdx].style;
           setTimeout(() => {
-            const [barOneIdx, newHeightOne, barTwoIdx, newHeightTwo] = animations[i];
-            const barOneStyle = arrayBars[barOneIdx].style;
-            const barTwoStyle = arrayBars[barTwoIdx].style;
-            barOneStyle.height = `${newHeightTwo}px`;
-            barTwoStyle.height = `${newHeightOne}px`;
+            barOneStyle.backgroundColor = PRIMARY_COLOR;
+            barTwoStyle.backgroundColor = PRIMARY_COLOR;
           }, i * MS_ANIMATION_SPEED);
         }
       }
-      this.toggle()
-      setTimeout(() => {
-        this.toggle()
-      }, animations.length * MS_ANIMATION_SPEED + 1)
+      else {
+        setTimeout(() => {
+          const [barOneIdx, newHeightOne, barTwoIdx, newHeightTwo] = animations[i];
+          const barOneStyle = arrayBars[barOneIdx].style;
+          const barTwoStyle = arrayBars[barTwoIdx].style;
+          barOneStyle.height = `${newHeightTwo}px`;
+          barTwoStyle.height = `${newHeightOne}px`;
+        }, i * MS_ANIMATION_SPEED);
+      }
     }
+
+    setTimeout(() => this.setState({
+      isDisabled: false
+    }), animations.length * MS_ANIMATION_SPEED);
   }
 
   heapSort() {
@@ -227,6 +225,10 @@ export default class SortingVisualizer extends React.Component {
       }
     }
 
+    setTimeout(() => this.setState({
+      isDisabled: false
+    }), animations.length * MS_ANIMATION_SPEED);
+
   }
 
   mergeSort() {
@@ -251,6 +253,11 @@ export default class SortingVisualizer extends React.Component {
         }, i * MS_ANIMATION_SPEED)
       }
     }
+
+    setTimeout(() => this.setState({
+      isDisabled: false
+    }), animations.length * MS_ANIMATION_SPEED);
+
   }
 
   render() {
@@ -263,6 +270,9 @@ export default class SortingVisualizer extends React.Component {
           bubbleSort={() => this.bubbleSort()}
           quickSort={() => this.quickSort()}
           heapSort={() => this.heapSort()}
+          mergeSort={() => this.mergeSort()}
+          toggleButtonStatus={(callback) => this.toggleButtonStatus(callback)}
+          isDisabled={this.state.isDisabled}
         />
 
         <Container className="array-container" fluid={true}>
