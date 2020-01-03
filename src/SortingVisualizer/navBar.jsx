@@ -18,7 +18,7 @@ import {
 const Topbar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
-  const {toggleButtonStatus, mergeSort} = props;
+  const {toggleButtonStatus, mergeSort, heapSort, quickSort, bubbleSort} = props;
 
 
   return (
@@ -28,23 +28,33 @@ const Topbar = (props) => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
-            <Button color="secondary" onClick={props.resetArray}>Generate New Array</Button >{' '}
+            <Button disabled={props.isDisabled} color="secondary" onClick={props.resetArray}>Generate New Array</Button >{' '}
             <NavItem>
-              <NavLink href="#" onClick={props.bubbleSort}>Bubble Sort</NavLink>
+              <NavLink disabled={props.isDisabled} href="#" 
+                onClick={() => {
+                  toggleButtonStatus(bubbleSort);
+                }}>
+              Bubble Sort</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="#" onClick={props.quickSort}>Quick Sort</NavLink>
+              <NavLink disabled={props.isDisabled} href="#" 
+                onClick={() => {
+                  toggleButtonStatus(quickSort);
+                }}>
+              Quick Sort</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="#" onClick={props.heapSort}>Heap Sort</NavLink>
+              <NavLink disabled={props.isDisabled} href="#" 
+                onClick={() => {
+                  toggleButtonStatus(heapSort);
+                }}>
+              Heap Sort</NavLink>
             </NavItem>
             <NavItem>
               <NavLink 
                 disabled={props.isDisabled} 
                 href="#" 
                 onClick={() => {
-                  // props.mergeSort()
-                  // props.toggleButtonStatus(props.mergeSort)
                   toggleButtonStatus(mergeSort);
                 }}>
               Merge Sort</NavLink>
