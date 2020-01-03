@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.css';
 import React from 'react';
 import './App.css';
 import SortingVisualizer from './SortingVisualizer/SortingVisualizer'
