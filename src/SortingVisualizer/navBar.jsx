@@ -23,7 +23,7 @@ const Topbar = (props) => {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">Sorting Algorithms Visualizer</NavbarBrand>
+        <NavbarBrand href="https://seungjin-kim.github.io/sorting-algorithms-visualizer/">Sorting Algorithms Visualizer</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
