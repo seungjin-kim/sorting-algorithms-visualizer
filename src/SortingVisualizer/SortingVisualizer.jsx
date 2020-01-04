@@ -292,9 +292,6 @@ export default class SortingVisualizer extends React.Component {
             </Col>
           </Row>
         </Container>
-        {/* <div className="footer">
-          SeungJin Kim
-        </div> */}
       </div>
     );
   }
