@@ -1,4 +1,3 @@
-// import SortingVisualizer from './SortingVisualizer.jsx'
 import React, { useState } from 'react';
 import {
   Collapse,

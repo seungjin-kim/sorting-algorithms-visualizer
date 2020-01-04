@@ -1,7 +1,7 @@
 import { Container, Row, Col } from 'reactstrap';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-// import './SortingVisualizer.css';
+import './SortingVisualizer.css';
 import {getMergeSortAnimations} from '../Algorithms/mergeSort.js'
 import {getBubbleSortAnimations} from '../Algorithms/bubbleSort.js'
 import {getQuickSortAnimations} from '../Algorithms/quickSort.js'
@@ -9,7 +9,7 @@ import {getHeapSortAnimations} from '../Algorithms/heapSort.js'
 import Topbar from './navBar.jsx'
 
 
-const MS_ANIMATION_SPEED = 3;
+const MS_ANIMATION_SPEED = 2.5;
 const NUM_OF_ARRAY_BARS = 140
 const PRIMARY_COLOR = '#93aed2';
 const SEC_COLOR = 'magenta';
@@ -28,13 +28,11 @@ export default class SortingVisualizer extends React.Component {
   }
 
   toggleButtonStatus(callback) {
-    
     this.setState({
       isDisabled: true
     });
     
-    setTimeout(() => callback(), 500);
-    
+    setTimeout(() => callback(), 100);
   }
 
   componentDidMount() {
@@ -264,7 +262,7 @@ export default class SortingVisualizer extends React.Component {
     const {array} = this.state;
 
     return (
-      <div style={{backgroundColor:'#ededed'}}>
+      <div className="main-container" style={{backgroundColor:'#ededed'}}>
         <Topbar 
           resetArray={() => this.resetArray()}
           bubbleSort={() => this.bubbleSort()}
@@ -294,8 +292,10 @@ export default class SortingVisualizer extends React.Component {
             </Col>
           </Row>
         </Container>
+        {/* <div className="footer">
+          SeungJin Kim
+        </div> */}
       </div>
-
     );
   }
 }
@@ -305,11 +305,3 @@ function generateRandomInt(min, max) {
   // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
-
-// function testArrayEquality(arrayOne, arrayTwo) {
-//   if (arrayOne.length !== arrayTwo.length) return false;
-//   for (let i = 0; i < arrayOne.length; i++) {
-//     if (arrayOne[i] !== arrayTwo[i]) return false;
-//   }
-//   return true;
-// }
